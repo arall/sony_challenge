@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <h1>Welcome {{ name }}</h1>
+
+        <form action = "/ping" method = "POST">
+            <p><h3>Enter URL to ping</h3></p>
+            <p><input type = 'text' name = 'url'/></p>
+            <p><input type = 'submit' value = 'Ping'/></p>
+        </form>
+
+        <form action="/logout">
+            <input type="submit" value="Logout" />
+        </form>    
+    </body>
+</html>

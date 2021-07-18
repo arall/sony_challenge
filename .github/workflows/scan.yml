@@ -1,0 +1,32 @@
+name: Scanner
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build
+        run: docker-compose --file docker-compose.yml up -d
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: arall
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Pull scanner image
+        run: docker pull ghcr.io/arall/sony_scanner
+
+      - name: Run the scanner
+        run: docker run -v "${{ github.workspace }}:/workspace" -v "/var/run/docker.sock:/var/run/docker.sock" --network sony_challenge_default ghcr.io/arall/sony_scanner config /workspace/scanner.yml

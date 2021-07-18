@@ -1,0 +1,17 @@
+hosts:
+  - web
+websites:
+  -
+    url: https://web
+    auth:
+      uri: /login
+      method: POST
+      data:
+        user: admin
+        pass: admin123
+      check: /dashboard
+      loggout: /logout
+repositories:
+  - /workspace/backend
+dockers:
+  - sony_challenge_web_1
